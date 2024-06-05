@@ -2,17 +2,14 @@ import { notFound } from "next/navigation";
 import { createSlug } from "@/utils/slug";
 import Image from "next/image";
 import fs from "fs/promises";
+import path from "node:path";
 
 async function getPostData(slug) {
-	var posts;
-	try {
-		const res = await fetch("/data/data.json");
-		posts = await res.json();
-	} catch (error) {
-		console.error(error);
-		const data = await fs.readFile("public/data/data.json", "utf-8");
-		posts = JSON.parse(data);
-	}
+	const data = await fs.readFile(
+		path.resolve("./public", "data/data.json"),
+		"utf-8"
+	);
+	const posts = JSON.parse(data);
 
 	// Find the post with the matching slug (created from title)
 	const post = posts.find((post) => createSlug(post.title) === slug);

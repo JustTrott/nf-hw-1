@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createSlug } from "@/utils/slug";
 import fs from "fs/promises";
+import path from "node:path";
 
 export const metadata = {
 	title: "Blog Posts - My Blog",
@@ -11,15 +12,11 @@ export const metadata = {
 };
 
 export default async function Blog() {
-	var posts;
-	try {
-		const res = await fetch("/data/data.json");
-		posts = await res.json();
-	} catch (error) {
-		console.error(error);
-		const data = await fs.readFile("public/data/data.json", "utf-8");
-		posts = JSON.parse(data);
-	}
+	const data = await fs.readFile(
+		path.resolve("./public", "data/data.json"),
+		"utf-8"
+	);
+	const posts = JSON.parse(data);
 
 	return (
 		<div className="container mx-auto px-4 py-8">

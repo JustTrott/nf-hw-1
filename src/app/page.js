@@ -2,17 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { createSlug } from "@/utils/slug";
 import fs from "fs/promises";
+import path from "node:path";
 
 export default async function Home() {
-	var posts;
-	try {
-		const res = await fetch("/data/data.json");
-		posts = await res.json();
-	} catch (error) {
-		console.error(error);
-		const data = await fs.readFile("public/data/data.json", "utf-8");
-		posts = JSON.parse(data);
-	}
+	const data = await fs.readFile(
+		path.resolve("./public", "data/data.json"),
+		"utf-8"
+	);
+	const posts = JSON.parse(data);
+
 	// Find the featured post (assuming ID 1 is always the featured post)
 	const featuredPost = posts.find((post) => post.id === 1);
 
