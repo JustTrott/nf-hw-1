@@ -2,6 +2,8 @@
 
 This is a simple blog application built with Next.js, featuring blog posts and an about page.
 
+You can visit the page at: [Vercel](https://nf-hw-1-delta.vercel.app/)
+
 ## Features
 
 -   **Blog Posts:** Display and view individual blog posts with titles, descriptions, and authors.
