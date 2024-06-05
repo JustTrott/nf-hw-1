@@ -11,8 +11,15 @@ export const metadata = {
 };
 
 export default async function Blog() {
-	const data = await fs.readFile("public/data/data.json", "utf-8");
-	const posts = JSON.parse(data);
+	var posts;
+	try {
+		const res = await fetch("/data/data.json");
+		posts = await res.json();
+	} catch (error) {
+		console.error(error);
+		const data = await fs.readFile("public/data/data.json", "utf-8");
+		posts = JSON.parse(data);
+	}
 
 	return (
 		<div className="container mx-auto px-4 py-8">

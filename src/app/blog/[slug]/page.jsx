@@ -4,8 +4,15 @@ import Image from "next/image";
 import fs from "fs/promises";
 
 async function getPostData(slug) {
-	const data = await fs.readFile("public/data/data.json", "utf-8");
-	const posts = JSON.parse(data);
+	var posts;
+	try {
+		const res = await fetch("/data/data.json");
+		posts = await res.json();
+	} catch (error) {
+		console.error(error);
+		const data = await fs.readFile("public/data/data.json", "utf-8");
+		posts = JSON.parse(data);
+	}
 
 	// Find the post with the matching slug (created from title)
 	const post = posts.find((post) => createSlug(post.title) === slug);
